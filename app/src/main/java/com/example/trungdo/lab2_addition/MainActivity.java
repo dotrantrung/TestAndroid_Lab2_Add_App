@@ -36,17 +36,21 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
-    public void sendMessage(View view) {
+    public void sendMessage() {
+
         EditText a = (EditText) findViewById(R.id.editText1);
         EditText b = (EditText) findViewById(R.id.editText2);
         int numA = Integer.parseInt(a.getText().toString()) ;
 
         int numB = Integer.parseInt(b.getText().toString()) ;
-        int sum = numA + numB;
+        int sumFunc = sum(numA,numB);
 
         TextView sumTV = (TextView) findViewById(R.id.textView3);
-        sumTV.setText(String.valueOf(sum));
+        sumTV.setText(String.valueOf(sumFunc));
 
+    }
+    public int sum(int a, int b){
+        return a+b;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

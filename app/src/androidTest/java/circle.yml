@@ -1,0 +1,109 @@
+Trung Do:
+	play clashhh
+	wait for me
+Gagan- CSE classmate:
+	I'm leaving the lab
+	Lol
+	I got stuck
+	I can't get fit to work
+	Git to work
+	It's so fucked up
+	We can just do it on for day
+	Friday
+Trung Do:
+	ok
+	ok, can you wait me, I can go to warren to eat w you
+Gagan- CSE classmate:
+	I'm not gonna eat there today
+Trung Do:
+	then where?
+Gagan- CSE classmate:
+	Probably in my room
+Trung Do:
+	ok
+	go to warren with me Gagann
+Gagan- CSE classmate:
+	Nahhh I'm not in the mood
+	That lab just pissed me off
+	I hate 110
+	So fucking stupid
+Trung Do:
+	is it that hard?
+Gagan- CSE classmate:
+	No I'm just stupid lol
+	The lab is easy I just can't setup git hub
+Trung Do:
+	im gonna eat at PC
+	do you want to join
+Gagan- CSE classmate:
+	I can't I'm about to shower
+Trung Do:
+	hey Gagan
+	is PC open 24/7?
+Gagan- CSE classmate:
+	nope
+	it closes at midnight
+Trung Do:
+	hey Gagan
+	do you want to work on the 110 lab tmr
+	at night I think
+Gagan- CSE classmate:
+	Yeah sure
+	But not to late
+Trung Do:
+	~6 - 9
+Gagan- CSE classmate:
+	Yeah that sounds good
+Trung Do:
+	ok
+	finish it, if there is no tutor we can check off Monday
+Gagan- CSE classmate:
+	Sounds good
+Trung Do:
+	ok
+Gagan- CSE classmate:
+	Trung
+	Where are you
+Trung Do:
+	hii
+	Im coming to Panda now
+Gagan- CSE classmate:
+	Oh okay
+Trung Do:
+	where are you
+Gagan- CSE classmate:
+	At panda
+	#
+# Build configuration for Circle CI
+#
+
+general:
+    artifacts:
+        - /home/ubuntu/Unit_test/app/build/outputs/apk/
+
+machine:
+    environment:
+        ANDROID_HOME: /usr/local/android-sdk-linux
+
+dependencies:
+    override:
+
+            - echo y | android update sdk --no-ui --all --filter tool,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,android-23
+            - echo y | android update sdk --no-ui --all --filter build-tools-23.0.2
+            - chmod +x gradlew
+
+
+test:
+     override:
+       # start the emulator
+       - emulator -avd circleci-android22 -no-audio -no-window:
+           background: true
+           parallel: true
+       # wait for it to have booted
+       - circle-android wait-for-boot
+       # run tests  against the emulator.
+       - ./gradlew connectedAndroidTest
+       # copy the build outputs to artifacts
+       # cp -r Unit_test/app/build/outputs $CIRCLE_ARTIFACTS
+       # copy the test results to the test results directory.
+       # cp -r Unit_test/app/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
